@@ -1,5 +1,6 @@
 #version 120
 
+uniform int biome_category;
 uniform int isEyeInWater;
 uniform int renderStage;
 uniform float viewHeight;
@@ -32,6 +33,10 @@ void main() {
   vec4 albedo = color;
 
   if (isEyeInWater == 1) {
+    discard;
+  }
+
+  if (biome_category == CAT_THE_END) {
     discard;
   }
 
