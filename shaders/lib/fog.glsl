@@ -40,11 +40,6 @@ vec4 applyFog(vec4 albedo, vec3 pos) {
   #ifdef DHTWEAK
   // TODO: make these values configurable
   if (isEyeInWater == 0) {
-    // fog has a little bit of the sky color in DH
-    // dont ask me why, this is just what i found
-    // through testing
-    finalFogColor = mix(mix(fogColor, skyColor, 0.15), fogColor, blindness);
-
     // based on DH's default values
     finalFogStart = mix(dhRenderDistance * 0.4, fogStart, blindness);
     finalFogEnd = mix(dhRenderDistance, fogEnd, blindness);
