@@ -40,10 +40,10 @@ void main() {
 
     // Calculate view space normal
     vec3 normal = normalize(gl_NormalMatrix * gl_Normal);
-    normal = (mc_Entity == 1.0) ? vec3(0.0, 1.0, 0.0) : (gbufferModelViewInverse * vec4(normal, 0.0)).xyz;
+    normal = (gbufferModelViewInverse * vec4(normal, 0.0)).xyz;
 
     // Output color with lighting to fragment shader
-    if (renderStage == MC_RENDER_STAGE_PARTICLES) {
+    if (renderStage == MC_RENDER_STAGE_PARTICLES || mc_Entity == 1) {
         fragColor = gl_Color;
     } else {
         fragColor = applyOldLighting(gl_Color, worldPos, normal);
