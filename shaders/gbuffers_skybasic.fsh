@@ -46,8 +46,12 @@ void main() {
   }
 
   if (renderStage == MC_RENDER_STAGE_SKY) {
-    vec3 pos = screenToView(vec3(gl_FragCoord.xy / vec2(viewWidth, viewHeight), 1.0));
-	  albedo = vec4(calcSkyColor(normalize(pos)), 1.0) * (1 - darknessFactor);
+    if (darknessFactor > 0) {
+      albedo = vec4(fogColor, 1);
+    } else {
+      vec3 pos = screenToView(vec3(gl_FragCoord.xy / vec2(viewWidth, viewHeight), 1.0));
+	    albedo = vec4(calcSkyColor(normalize(pos)), 1.0);
+    }
   }
 
   gl_FragData[0] = albedo;
