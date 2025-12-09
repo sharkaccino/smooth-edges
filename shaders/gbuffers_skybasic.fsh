@@ -2,6 +2,7 @@
 
 uniform int biome_category;
 uniform int isEyeInWater;
+uniform float darknessFactor;
 uniform int renderStage;
 uniform float viewHeight;
 uniform float viewWidth;
@@ -32,6 +33,10 @@ vec3 screenToView(vec3 screenPos) {
 void main() {
   vec4 albedo = color;
 
+  if (darknessFactor == 1) {
+    discard;
+  }
+
   if (isEyeInWater == 1) {
     discard;
   }
@@ -42,7 +47,7 @@ void main() {
 
   if (renderStage == MC_RENDER_STAGE_SKY) {
     vec3 pos = screenToView(vec3(gl_FragCoord.xy / vec2(viewWidth, viewHeight), 1.0));
-	  albedo = vec4(calcSkyColor(normalize(pos)), 1.0);
+	  albedo = vec4(calcSkyColor(normalize(pos)), 1.0) * (1 - darknessFactor);
   }
 
   gl_FragData[0] = albedo;

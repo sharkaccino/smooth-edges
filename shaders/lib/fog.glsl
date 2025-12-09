@@ -9,6 +9,7 @@ uniform int fogMode;
 uniform vec3 skyColor;
 uniform int dhRenderDistance;
 uniform float blindness;
+uniform float darknessFactor;
 #endif
 
 // int GL_EXP = 2048;
@@ -38,8 +39,12 @@ vec4 applyFog(vec4 albedo, vec3 pos) {
   float finalFogEnd = fogEnd;
 
   #ifdef DHTWEAK
+  if (darknessFactor == 1) {
+    discard;
+  }
+
   // TODO: make these values configurable
-  if (isEyeInWater == 0) {
+  if (isEyeInWater == 0 && darknessFactor == 0) {
     // based on DH's default values
     finalFogStart = mix(dhRenderDistance * 0.4, fogStart, blindness);
     finalFogEnd = mix(dhRenderDistance, fogEnd, blindness);
